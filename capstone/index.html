@@ -8,6 +8,27 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <h1 class="heading">What Can I Cook?</h1>
+    <div class="header">
+  <div class="logo">What Can I <span>Cook?</span></div>
+  <div class="subtitle">Select your ingredients and discover what you can make.</div>
+</div>
+
+<div class="selected-bar" id="selected-bar">
+  <span class="selected-label" id="sel-label">No ingredients selected yet</span>
+  <button class="cook-btn" id="cook-btn" disabled>
+    <i class="ti ti-chef-hat"></i> What can I cook?
+  </button>
+</div>
+
+<div class="main">
+  <div id="menu">
+    <div class="loading-state" id="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">Fetching ingredients from Claude...</div>
+    </div>
+  </div>
+</div>
+
+<script src="./script.js"></script>
 </body>
 </html>
