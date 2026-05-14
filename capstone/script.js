@@ -244,27 +244,47 @@ document.getElementById("cook-btn").addEventListener("click", async () => {
       <div class="results-box">
         <h2 class="results-title">Here's what you can make!</h2>
         ${details.map(meal => {
-          const ingredients = [];
-          for (let i = 1; i <= 20; i++) {
-            if (meal[`strIngredient${i}`]) ingredients.push(meal[`strIngredient${i}`]);
-          }
-          return `
-            <div class="result-card">
-              <img class="result-img" src="${meal.strMealThumb}/preview" alt="${meal.strMeal}" />
-              <div class="result-info">
-                <h3 class="result-name">${meal.strMeal}</h3>
-                <p class="result-category">🍽 ${meal.strCategory} · ${meal.strArea}</p>
-                <p class="result-ingredients"><strong>Needs:</strong> ${ingredients.slice(0, 6).join(", ")}${ingredients.length > 6 ? "..." : ""}</p>
-              </div>
-            </div>`;
-        }).join("")}
+  const ingredients = [];
+  for (let i = 1; i <= 20; i++) {
+    if (meal[`strIngredient${i}`] && meal[`strMeasure${i}`]) {
+      ingredients.push(`${meal[`strMeasure${i}`].trim()} ${meal[`strIngredient${i}`].trim()}`);
+    }
+  }
+  const cardId = `meal-${meal.idMeal}`;
+  return `
+    <div class="result-card" onclick="toggleInstructions('${cardId}')">
+      <img class="result-img" src="${meal.strMealThumb}/preview" alt="${meal.strMeal}" />
+      <div class="result-info">
+        <h3 class="result-name">${meal.strMeal}</h3>
+        <p class="result-category">🍽 ${meal.strCategory} · ${meal.strArea}</p>
+        <p class="result-ingredients"><strong>Needs:</strong> ${ingredients.slice(0, 6).join(", ")}${ingredients.length > 6 ? "..." : ""}</p>
+        <p class="result-tap-hint">Tap to see instructions ▾</p>
+      </div>
+    </div>
+    <div class="instructions-panel" id="${cardId}">
+      <h4 class="instructions-title">Ingredients</h4>
+      <ul class="instructions-ingredients">
+        ${ingredients.map(ing => `<li>${ing}</li>`).join("")}
+      </ul>
+      <h4 class="instructions-title">Instructions</h4>
+      <p class="instructions-text">${meal.strInstructions}</p>
+    </div>`;
+}).join("")}
         <button class="close-results" onclick="document.getElementById('results-panel').innerHTML=''">✕ Close</button>
       </div>`;
   } catch (err) {
     console.error("Error:", err);
-    resultsPanel.innerHTML = `<div class="error-state">⚠️ Couldn't load recipes. Check your connection and try again.<br><button class="retry-btn" onclick="document.getElementById('cook-btn').click()">Try again</button></div>`;
+    resultsPanel.innerHTML = `<div class="error-state">Couldn't load recipes. Check your connection and try again.<br><button class="retry-btn" onclick="document.getElementById('cook-btn').click()">Try again</button></div>`;
   }
 });
+
+function toggleInstructions(id) {
+  const panel = document.getElementById(id);
+  panel.classList.toggle("open");
+  const card = panel.previousElementSibling;
+  const hint = card.querySelector(".result-tap-hint");
+  hint.textContent = panel.classList.contains("open") ? "Tap to close ▴" : "Tap to see instructions ▾";
+}
 
 // ── Start ─────────────────────────────────────────────────────────────────
 init();

@@ -202,7 +202,7 @@ body {
 .close-results:hover { background: #fff0dc; }
 
 /* ── Result cards ── */
-.result-card { display: flex; gap: 14px; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0ddc0; animation: fadeSlide 0.4s ease both; }
+.result-card { display: flex; gap: 14px; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0ddc0; animation: fadeSlide 0.4s ease both; cursor: pointer;}
 .result-card:last-of-type { border-bottom: none; }
 .result-card:nth-child(1) { animation-delay: 0.1s; }
 .result-card:nth-child(2) { animation-delay: 0.2s; }
@@ -215,6 +215,35 @@ body {
 .result-name { font-family: Georgia, serif; font-size: 16px; color: #5c2e00; margin-bottom: 3px; }
 .result-category { font-size: 12px; color: #b07040; margin-bottom: 5px; }
 .result-ingredients { font-size: 13px; color: #3b2a1a; line-height: 1.5; }
+.result-tap-hint { font-size: 12px; color: #b8520a; margin-top: 5px; }
+
+
+.instructions-panel {
+  display: none;
+  padding: 1rem 1.25rem 1.25rem;
+  background: #fff8f0;
+  border-top: 1px solid #f0ddc0;
+  margin-bottom: 8px;
+  border-radius: 0 0 10px 10px;
+}
+.instructions-panel.open { display: block; animation: fadeIn 0.3s ease both; }
+
+.instructions-title { font-family: Georgia, serif; font-size: 14px; color: #7c3f00; margin: 0.75rem 0 0.4rem; }
+
+.instructions-ingredients {
+  list-style: disc;
+  padding-left: 1.25rem;
+  font-size: 13px;
+  color: #3b2a1a;
+  line-height: 1.8;
+}
+
+.instructions-text {
+  font-size: 13px;
+  color: #3b2a1a;
+  line-height: 1.8;
+  white-space: pre-line;
+}
 
 /* ── Keyframes ── */
 @keyframes slideDown {
